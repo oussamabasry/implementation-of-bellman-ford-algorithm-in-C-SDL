@@ -101,3 +101,13 @@ for(i=0;i<G->numberNode;i++)
 }
 
 }
+
+
+int searchTabNode(Graph *G,int x,int y){
+  for(int i=0;i<G->numberNode;i++)
+   {
+      if(G->tab[i]->data->x==x&&G->tab[i]->data->y==y)
+        return 1;
+   }
+ return 0;
+}

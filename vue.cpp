@@ -25,89 +25,52 @@ int vue(Graph *G)
     SDL_SetWindowTitle(pWindow,"Projet de Graphes");
 
 
-    SDL_Event events;
-    SDL_Event ev;
+
+
     bool isOpen{ true };
     SDL_Rect rect1={10,10,50,50};
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
-        SDL_RenderClear(pRenderer);
-        SDL_RenderPresent(pRenderer);
+    SDL_RenderClear(pRenderer);
+    SDL_RenderPresent(pRenderer);
+
+    SDL_Point mouse;
+
 
 
     while (isOpen)
     {
+        SDL_Event events;
         while (SDL_PollEvent(&events))
         {
 
-            if(events.type==SDL_QUIT){
-                isOpen=false;
+            switch(events.type){
 
-            }
-            else if(events.type==SDL_MOUSEBUTTONDOWN)
-            {
-                rect1.x=events.motion.x-(events.motion.x%100);
-                rect1.y=events.motion.y-(events.motion.y%100);
-               SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 255);
-               SDL_RenderFillRect(pRenderer, &rect1);
-               SDL_RenderPresent(pRenderer);
+                case SDL_QUIT:
+                    isOpen=false;
+                    break;
 
-               addElementNode(G,rect1.x/100,rect1.y/100,0);
+                case SDL_MOUSEBUTTONDOWN:
+                    mouse.x=events.motion.x-(events.motion.x%100);
+                    mouse.y=events.motion.y-(events.motion.y%100);
+                    if(searchTabNode(G,mouse.x/100,mouse.y/100)==1){
 
-            }
-            else if(events.key.keysym.sym == SDLK_d && events.type==SDL_KEYDOWN)
-            {
-
-                    SDL_Point pointA;
-                    SDL_Point pointB;
-                    bool test1=false;
-
-
-                    do{
-                            SDL_PollEvent(&events1)
-                     printf("\ndebut do");
-                    while(test1==false ){
-                      printf("\ndebut while1");
-                        if(events.button.button == SDL_BUTTON_LEFT){
-                            printf("\ndebut if");
-                            pointA.x=events.motion.x-(events.motion.x%100);
-                            pointA.y=events.motion.y-(events.motion.y%100);
-                            printf("\nle premier point");
-                            test1=true;
-                        }
+                    }else {
+                        rect1.x=mouse.x;
+                        rect1.y=mouse.y;
+                        SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 255);
+                        SDL_RenderFillRect(pRenderer, &rect1);
+                        SDL_RenderPresent(pRenderer);
+                        addElementNode(G,rect1.x/100,rect1.y/100,0);
                     }
 
-                    while(test1==true){
-                        printf("\ndebut while2");
-                        if(events.button.button == SDL_BUTTON_LEFT){
-                            pointB.x=events.motion.x-(events.motion.x%100);
-                            pointB.y=events.motion.y-(events.motion.y%100);
-                             printf("\nleq deuxieme point");
-                            SDL_SetRenderDrawColor(pRenderer, 0, 255, 0, 255);
-                            SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y, pointB.x, pointB.y);
-                            SDL_RenderPresent(pRenderer);
-                            test1=false;
 
-                        }
-                    }
-                    if(events.key.keysym.sym == SDLK_d && events.type==SDL_KEYDOWN){
-                        break;
-                    }
-                     printf("\hi");
-                    }while(1);
-
-
-
-
+                default:continue;
 
             }
-            else if (events.key.keysym.sym == SDLK_w)
-            {
-                isOpen=false;
-            }
-
 
 
         }
+
     repere(pRenderer);
 
     }
@@ -146,3 +109,26 @@ void repere( SDL_Renderer* pRenderer){
    }
 
 }
+
+
+
+/*
+else if(events.key.keysym.sym == SDLK_d && events.type==SDL_KEYDOWN)
+            {
+                   SDL_Point pointA;
+                   SDL_Point pointB;
+                   printf("\ndebut");
+                   SDL_Event ev;
+                   SDL_WaitEvent(&ev);
+                   pointA.x=events.motion.x-(events.motion.x%100);
+                   pointA.y=events.motion.y-(events.motion.y%100);
+                   printf("\nmilieu");
+                   SDL_WaitEvent(&ev);
+                   pointB.x=events.motion.x-(events.motion.x%100);
+                   pointB.y=events.motion.y-(events.motion.y%100);
+                    printf("\nfin");
+
+                  SDL_SetRenderDrawColor(pRenderer, 0, 255, 0, 255);
+                  SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y, pointB.x, pointB.y);
+                  SDL_RenderPresent(pRenderer);
+*/

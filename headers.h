@@ -44,5 +44,6 @@ int vue(Graph *G);
 void repere( SDL_Renderer* pRenderer);
 Graph *InitializGraphe(bool isOriented);
 void addElementNode(Graph *G,int x,int y,int valuation);
+int searchTabNode(Graph *G,int x,int y);
 
 #endif // HEADERS_H_INCLUDED
