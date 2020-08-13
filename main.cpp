@@ -86,7 +86,12 @@ for(int i=0;i<G->numberNode;i++)
 {
     printf("(%d,%d)\n",G->tab[i]->data->x,G->tab[i]->data->y);
 }
-
+printf("\n\n\n **********************\n\n");
+for(int i=0;i<G->numberNode;i++)
+{
+   displayList(G->tab[i]);
+   printf("\n");
+}
 
 
 return 0;

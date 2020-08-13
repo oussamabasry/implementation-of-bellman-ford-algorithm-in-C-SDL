@@ -56,7 +56,8 @@ int vue(Graph *G)
                 case SDL_MOUSEBUTTONDOWN:
                     mouse.x=events.motion.x-(events.motion.x%100);
                     mouse.y=events.motion.y-(events.motion.y%100);
-                    if(searchTabNode(G,mouse.x/100,mouse.y/100)==1){
+                    Element *searchElem=searchTab(G,mouse.x/100,mouse.y/100);
+                    if(searchElem!=NULL){
                             if(boolPointA==false){
                                   pointA.x=mouse.x;
                                   pointA.y=mouse.y;
@@ -67,6 +68,8 @@ int vue(Graph *G)
                                  SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 255);
                                  SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y, pointB.x, pointB.y);
                                  SDL_RenderPresent(pRenderer);
+                                 searchElem=searchTab(G,pointA.x/100,pointA.y/100);
+                                 addElementList(&searchElem,pointB.x/100,pointB.y/100,0);
                                  boolPointA=false;
                                  boolPointB=false;
 
@@ -81,7 +84,8 @@ int vue(Graph *G)
                     }
 
 
-                default:continue;
+
+
 
             }
 

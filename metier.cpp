@@ -69,7 +69,7 @@ return gr;
 
 Graph *InitializGraphe(bool isOriented){
 Graph *gr;
-int i;
+
 
 gr=(Graph*)malloc(sizeof(Graph));
 gr->isOriented=isOriented;
@@ -111,3 +111,13 @@ int searchTabNode(Graph *G,int x,int y){
    }
  return 0;
 }
+
+Element* searchTab(Graph *G,int x,int y){
+  for(int i=0;i<G->numberNode;i++)
+   {
+      if(G->tab[i]->data->x==x&&G->tab[i]->data->y==y)
+        return G->tab[i];
+   }
+ return NULL;
+}
+
