@@ -34,7 +34,11 @@ int vue(Graph *G)
     SDL_RenderPresent(pRenderer);
 
     SDL_Point mouse;
+    SDL_Point pointA;
+    SDL_Point pointB;
 
+    bool boolPointA=false;
+    bool boolPointB=false;
 
 
     while (isOpen)
@@ -53,7 +57,20 @@ int vue(Graph *G)
                     mouse.x=events.motion.x-(events.motion.x%100);
                     mouse.y=events.motion.y-(events.motion.y%100);
                     if(searchTabNode(G,mouse.x/100,mouse.y/100)==1){
+                            if(boolPointA==false){
+                                  pointA.x=mouse.x;
+                                  pointA.y=mouse.y;
+                                  boolPointA=true;
+                            }else if(boolPointA==true&& boolPointB==false){
+                                 pointB.x=mouse.x;
+                                 pointB.y=mouse.y;
+                                 SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 255);
+                                 SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y, pointB.x, pointB.y);
+                                 SDL_RenderPresent(pRenderer);
+                                 boolPointA=false;
+                                 boolPointB=false;
 
+                            }
                     }else {
                         rect1.x=mouse.x;
                         rect1.y=mouse.y;
@@ -94,7 +111,7 @@ void repere( SDL_Renderer* pRenderer){
     pointB.y=600;
     pointA.x=i;
     pointB.x=i;
-    SDL_SetRenderDrawColor(pRenderer, 0, 255, 0, 255);
+    SDL_SetRenderDrawColor(pRenderer, 0, 255, 255, 255);
     SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y, pointB.x, pointB.y);
     SDL_RenderPresent(pRenderer);
    }
@@ -103,7 +120,7 @@ void repere( SDL_Renderer* pRenderer){
     pointB.y=i;
     pointA.x=0;
     pointB.x=800;
-    SDL_SetRenderDrawColor(pRenderer, 0, 255, 0, 255);
+    SDL_SetRenderDrawColor(pRenderer, 0, 255, 255, 255);
     SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y, pointB.x, pointB.y);
     SDL_RenderPresent(pRenderer);
    }
