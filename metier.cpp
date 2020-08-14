@@ -44,7 +44,7 @@ Element *elem;
 
 void displayList(Element *L){
 while(L!=NULL){
-    printf("(%d,%d) - ",L->data->x,L->data->y);
+    printf("(%d,%d,%d) - ",L->data->x,L->data->y,L->valuation);
     L=L->next;
 }
 }

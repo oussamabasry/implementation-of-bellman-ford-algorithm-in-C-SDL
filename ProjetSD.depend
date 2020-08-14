@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1597337258 source:c:\users\hp\desktop\projetsd\metier.cpp
+1597364747 source:c:\users\hp\desktop\projetsd\metier.cpp
 	"headers.h"
 
-1597337301 c:\users\hp\desktop\projetsd\headers.h
+1597422127 c:\users\hp\desktop\projetsd\headers.h
 	<stdio.h>
 	<stdlib.h>
 	<SDL2/SDL.h>
@@ -366,8 +366,14 @@
 	<stdlib.h>
 	"headers.h"
 
-1597350430 source:c:\users\hp\desktop\projetsd\vue.cpp
+1597422745 source:c:\users\hp\desktop\projetsd\vue.cpp
 	<SDL2/SDL.h>
 	<cstdlib>
+	<SDL2/SDL_ttf.h>
 	"headers.h"
+
+1547325890 c:\sdl\include\sdl2\sdl_ttf.h
+	"SDL.h"
+	"begin_code.h"
+	"close_code.h"
 
