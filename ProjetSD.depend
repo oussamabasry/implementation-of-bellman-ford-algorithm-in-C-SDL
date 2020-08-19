@@ -2,7 +2,7 @@
 1597364747 source:c:\users\hp\desktop\projetsd\metier.cpp
 	"headers.h"
 
-1597422127 c:\users\hp\desktop\projetsd\headers.h
+1597851069 c:\users\hp\desktop\projetsd\headers.h
 	<stdio.h>
 	<stdlib.h>
 	<SDL2/SDL.h>
@@ -361,16 +361,17 @@
 	"begin_code.h"
 	"close_code.h"
 
-1597353498 source:c:\users\hp\desktop\projetsd\main.cpp
+1597849109 source:c:\users\hp\desktop\projetsd\main.cpp
 	<stdio.h>
 	<stdlib.h>
 	"headers.h"
 
-1597422745 source:c:\users\hp\desktop\projetsd\vue.cpp
+1597852897 source:c:\users\hp\desktop\projetsd\vue.cpp
 	<SDL2/SDL.h>
 	<cstdlib>
 	<SDL2/SDL_ttf.h>
 	"headers.h"
+	<string.h>
 
 1547325890 c:\sdl\include\sdl2\sdl_ttf.h
 	"SDL.h"

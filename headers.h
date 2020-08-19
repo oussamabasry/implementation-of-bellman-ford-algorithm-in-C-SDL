@@ -46,5 +46,6 @@ Graph *InitializGraphe(bool isOriented);
 void addElementNode(Graph *G,int x,int y,int valuation);
 int searchTabNode(Graph *G,int x,int y);
 Element *searchTab(Graph *G,int x,int y);
-void text(SDL_Renderer* pRenderer, char *text,int x,int y);
+void text(SDL_Renderer* pRenderer, char *text,int fontSize, int x,int y);
+bool conditionNumber(SDL_Event event);
 #endif // HEADERS_H_INCLUDED

@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <SDL2/SDL_ttf.h>
 #include "headers.h"
+#include<string.h>
 
 
 
@@ -15,11 +16,7 @@ int vue(Graph *G)
         return EXIT_FAILURE;
     }
 
-    if(TTF_Init() <0)
-      {
-    fprintf(stderr, "Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
-    exit(EXIT_FAILURE);
-     }
+
 
     SDL_Window* pWindow{ nullptr };
     SDL_Renderer* pRenderer{ nullptr };
@@ -49,7 +46,11 @@ int vue(Graph *G)
 
     bool boolPointA=false;
     bool boolPointB=false;
-    int i=100;
+    bool testSaisieCout=false;
+    char coutArret[10]="";
+    int i=5;
+
+    Element *searchElem;
    /* TTF_Font *police = NULL;
     police = TTF_OpenFont("arial.ttf", 20);
     SDL_Surface* text = TTF_RenderText_Blended(police, "Algorithme de bellman ford", SDL_Color{ 0, 255, 0, 255 });
@@ -75,9 +76,11 @@ int vue(Graph *G)
                     break;
 
                 case SDL_MOUSEBUTTONDOWN:
+                  {
+                    strcpy(coutArret,"");
                     mouse.x=events.motion.x-(events.motion.x%100);
                     mouse.y=events.motion.y-(events.motion.y%100);
-                    Element *searchElem=searchTab(G,mouse.x/100,mouse.y/100);
+                    searchElem=searchTab(G,mouse.x/100,mouse.y/100);
                     if(searchElem!=NULL){
                             if(boolPointA==false){
                                   pointA.x=mouse.x;
@@ -91,8 +94,8 @@ int vue(Graph *G)
                                  SDL_RenderPresent(pRenderer);
                                  //printf("\ndonner le cout:");
                                 // scanf("%d",&le_cout);
-                                 searchElem=searchTab(G,pointA.x/100,pointA.y/100);
-                                 addElementList(&searchElem,pointB.x/100,pointB.y/100,0);
+                                 i+=40;
+                                 text(pRenderer,(char *)"Saisir le cout de l'arret",17,830,i);
                                  boolPointA=false;
                                  boolPointB=false;
 
@@ -100,29 +103,57 @@ int vue(Graph *G)
                             }
                     }else {
                         if(mouse.x<800){
+
                             rect1.x=mouse.x;
                             rect1.y=mouse.y;
                             SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 255);
                             SDL_RenderFillRect(pRenderer, &rect1);
                             SDL_RenderPresent(pRenderer);
+
+                            char coordonnes[20]="";
+                            char buffer[20];
+                            itoa(rect1.x/100,buffer,10);
+                            strcat(coordonnes,buffer);
+                            strcat(coordonnes," , ");
+                            itoa(rect1.y/100,buffer,10);
+                            strcat(coordonnes,buffer);
+                            text(pRenderer,coordonnes,17,mouse.x+12,mouse.y+21);
+                            strcpy(coordonnes,"");
+
+
                             addElementNode(G,rect1.x/100,rect1.y/100,0);
-                            text(pRenderer,"L'ajout d'un neoud",830,40+i);
-                            i+=100;
+
+
                         }
 
                     }
+                  }
 
+            case SDL_KEYDOWN:
+                {
 
+                  if(events.key.keysym.sym == SDLK_ESCAPE){
+                        SDL_Point mileu;
+                        mileu.x=((pointA.x+pointB.x)/2);
+                        mileu.y=((pointA.y+pointB.y)/2)-20;
+                        searchElem=searchTab(G,pointA.x/100,pointA.y/100);
+                        addElementList(&searchElem,pointB.x/100,pointB.y/100,atoi(coutArret));
+                        text(pRenderer,coutArret,18,mileu.x,mileu.y);
+
+                  }
+                  if(conditionNumber(events)){
+                    strcat(coutArret,SDL_GetKeyName(events.key.keysym.sym));
+                  }
+                }
+           default: continue;
 
 
 
             }
-
-
         }
 
     repere(pRenderer);
-    text(pRenderer,"oussama basry",830,40);
+
 
  /*
         SDL_SetRenderDrawColor(pRenderer, 0, 255, 0, 255);
@@ -169,10 +200,15 @@ void repere( SDL_Renderer* pRenderer){
 }
 
 
-void text(SDL_Renderer* pRenderer, char *txt,int x, int y){
+void text(SDL_Renderer* pRenderer, char *txt,int fontSize, int x, int y){
 
+     if(TTF_Init() <0)
+      {
+         fprintf(stderr, "Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
+         exit(EXIT_FAILURE);
+     }
     TTF_Font *police = NULL;
-    police = TTF_OpenFont("arial.ttf", 20);
+    police = TTF_OpenFont("arial.ttf", fontSize);
     SDL_Surface* text = TTF_RenderText_Blended(police,txt , SDL_Color{ 0, 255, 0, 255 });
     SDL_Texture* texture = SDL_CreateTextureFromSurface(pRenderer, text);
     SDL_Rect position;
@@ -188,6 +224,21 @@ void text(SDL_Renderer* pRenderer, char *txt,int x, int y){
     TTF_Quit();
 }
 
+bool conditionNumber(SDL_Event events){
+if(events.key.keysym.sym == SDLK_0 ||
+   events.key.keysym.sym == SDLK_1 ||
+   events.key.keysym.sym == SDLK_2 ||
+   events.key.keysym.sym == SDLK_3 ||
+   events.key.keysym.sym == SDLK_4 ||
+   events.key.keysym.sym == SDLK_5 ||
+   events.key.keysym.sym == SDLK_6 ||
+   events.key.keysym.sym == SDLK_7 ||
+   events.key.keysym.sym == SDLK_8 ||
+   events.key.keysym.sym == SDLK_9 ){
+    return true;
+   }
+ return false;
+}
 
 
 
