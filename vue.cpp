@@ -109,7 +109,24 @@ if (music == nullptr)
                                  pointB.x=mouse.x;
                                  pointB.y=mouse.y;
                                  SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 255);
-                                 SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y, pointB.x, pointB.y);
+                                 if(pointA.x<pointB.x && pointA.y<pointB.y){
+                                    SDL_RenderDrawLine(pRenderer, pointA.x+50, pointA.y+50, pointB.x, pointB.y);
+                                 }else if(pointA.x>pointB.x && pointA.y<pointB.y){
+                                   SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y+50, pointB.x+50, pointB.y);
+                                 }else if(pointA.x>pointB.x && pointA.y>pointB.y){
+                                    SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y, pointB.x+50, pointB.y+50);
+                                 }else if(pointA.x<pointB.x && pointA.y>pointB.y){
+                                    SDL_RenderDrawLine(pRenderer, pointA.x+50, pointA.y, pointB.x, pointB.y+50);
+                                 }else if(pointA.x==pointB.x && pointA.y<pointB.y){
+                                   SDL_RenderDrawLine(pRenderer, pointA.x+25, pointA.y+50, pointB.x+25, pointB.y);
+                                 }else if(pointA.x==pointB.x && pointA.y>pointB.y){
+                                 SDL_RenderDrawLine(pRenderer, pointA.x+25, pointA.y, pointB.x+25, pointB.y+50);
+                                 }else if(pointA.y==pointB.y && pointA.x>pointB.x){
+                                   SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y+25, pointB.x+50, pointB.y+25);
+                                 }else if(pointA.y==pointB.y && pointA.x<pointB.x){
+                                     SDL_RenderDrawLine(pRenderer, pointA.x+50, pointA.y+25, pointB.x, pointB.y+25);
+                                 }
+
                                  SDL_RenderPresent(pRenderer);
                                  //printf("\ndonner le cout:");
                                 // scanf("%d",&le_cout);
@@ -155,11 +172,45 @@ if (music == nullptr)
 
                   if(events.key.keysym.sym == SDLK_ESCAPE){
                         SDL_Point mileu;
-                        mileu.x=((pointA.x+pointB.x)/2);
-                        mileu.y=((pointA.y+pointB.y)/2)-20;
+
+                        if(pointA.x<pointB.x && pointA.y<pointB.y){
+                                   // SDL_RenderDrawLine(pRenderer, pointA.x+50, pointA.y+50, pointB.x, pointB.y);
+                                    mileu.x=((pointA.x+50+pointB.x)/2);
+                                    mileu.y=((pointA.y+50+pointB.y)/2);
+                                 }else if(pointA.x>pointB.x && pointA.y<pointB.y){
+                                   //SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y+50, pointB.x+50, pointB.y);
+                                   mileu.x=((pointA.x+pointB.x+50)/2);
+                                   mileu.y=((pointA.y+50+pointB.y)/2);
+                                 }else if(pointA.x>pointB.x && pointA.y>pointB.y){
+                                   // SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y, pointB.x+50, pointB.y+50);
+                                    mileu.x=((pointA.x+pointB.x+50)/2);
+                                    mileu.y=((pointA.y+pointB.y+50)/2);
+                                 }else if(pointA.x<pointB.x && pointA.y>pointB.y){
+                                    //SDL_RenderDrawLine(pRenderer, pointA.x+50, pointA.y, pointB.x, pointB.y+50);
+                                    mileu.x=((pointA.x+50+pointB.x)/2);
+                                    mileu.y=((pointA.y+pointB.y+50)/2);
+                                 }else if(pointA.x==pointB.x && pointA.y<pointB.y){
+                                   //SDL_RenderDrawLine(pRenderer, pointA.x+25, pointA.y+50, pointB.x+25, pointB.y);
+                                   mileu.x=((pointA.x+25+pointB.x+25)/2);
+                                   mileu.y=((pointA.y+50+pointB.y)/2);
+                                 }else if(pointA.x==pointB.x && pointA.y>pointB.y){
+                                 //SDL_RenderDrawLine(pRenderer, pointA.x+25, pointA.y, pointB.x+25, pointB.y+50);
+                                 mileu.x=((pointA.x+25+pointB.x+25)/2)-(((pointA.x+25+pointB.x+25)/2)/10);
+                                 mileu.y=((pointA.y+pointB.y+50)/2);
+                                 }else if(pointA.y==pointB.y && pointA.x>pointB.x){
+                                   //SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y+25, pointB.x+50, pointB.y+25);
+                                   mileu.x=((pointA.x+pointB.x+50)/2);
+                                   mileu.y=((pointA.y+25+pointB.y+25)/2);
+                                 }else if(pointA.y==pointB.y && pointA.x<pointB.x){
+                                     //SDL_RenderDrawLine(pRenderer, pointA.x+50, pointA.y+25, pointB.x, pointB.y+25);
+                                     mileu.x=((pointA.x+50+pointB.x)/2);
+                                     mileu.y=((pointA.y+25+pointB.y+25)/2);
+                                 }
+
+
                         searchElem=searchTab(G,pointA.x/100,pointA.y/100);
                         addElementList(&searchElem,pointB.x/100,pointB.y/100,atoi(coutArret));
-                        text(pRenderer,coutArret,18,mileu.x,mileu.y);
+                        text(pRenderer,coutArret,15,mileu.x,mileu.y);
 
                   }
                   if(conditionNumber(events)){
@@ -173,7 +224,7 @@ if (music == nullptr)
             }
         }
 
-   // repere(pRenderer);
+    repere(pRenderer);
 
 
  /*
@@ -201,7 +252,7 @@ void repere( SDL_Renderer* pRenderer){
    SDL_Point pointB;
    int i;
 
-   for(i=0;i<=800;i+=100){
+   for(i=0;i<=900;i+=100){
     pointA.y=0;
     pointB.y=600;
     pointA.x=i;
@@ -214,7 +265,7 @@ void repere( SDL_Renderer* pRenderer){
     pointA.y=i;
     pointB.y=i;
     pointA.x=0;
-    pointB.x=800;
+    pointB.x=900;
     SDL_SetRenderDrawColor(pRenderer, 0, 255, 255, 255);
     SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y, pointB.x, pointB.y);
     SDL_RenderPresent(pRenderer);
