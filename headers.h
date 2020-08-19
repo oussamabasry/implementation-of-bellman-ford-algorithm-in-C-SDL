@@ -48,4 +48,5 @@ int searchTabNode(Graph *G,int x,int y);
 Element *searchTab(Graph *G,int x,int y);
 void text(SDL_Renderer* pRenderer, char *text,int fontSize, int x,int y);
 bool conditionNumber(SDL_Event event);
+void audioAlert();
 #endif // HEADERS_H_INCLUDED

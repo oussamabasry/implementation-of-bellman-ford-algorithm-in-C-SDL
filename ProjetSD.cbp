@@ -34,6 +34,7 @@
 		</Compiler>
 		<Linker>
 			<Add option="-lSDL2_ttf" />
+			<Add option="-lSDL2_mixer" />
 			<Add library="mingw32" />
 			<Add library="SDL2main" />
 			<Add library="SDL2.dll" />

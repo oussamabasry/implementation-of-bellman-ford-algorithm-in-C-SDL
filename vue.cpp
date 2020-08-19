@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include <cstdlib>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 #include "headers.h"
 #include<string.h>
 
@@ -21,7 +22,7 @@ int vue(Graph *G)
     SDL_Window* pWindow{ nullptr };
     SDL_Renderer* pRenderer{ nullptr };
 
-    if (SDL_CreateWindowAndRenderer(1100,600, SDL_WINDOW_SHOWN, &pWindow, &pRenderer) < 0)
+    if (SDL_CreateWindowAndRenderer(1300,600, SDL_WINDOW_SHOWN, &pWindow, &pRenderer) < 0)
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "[DEBUG] > %s", SDL_GetError());
         SDL_Quit();
@@ -63,6 +64,24 @@ int vue(Graph *G)
     TTF_CloseFont(police);
 */
 
+if (Mix_OpenAudio(96000, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) < 0)
+    {
+        SDL_Log("Erreur initialisation SDL_mixer : %s", Mix_GetError());
+        return -1;
+    }
+
+    Mix_Music* music = Mix_LoadMUS("audio.mp3");
+
+if (music == nullptr)
+{
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Erreur chargement de la musique : %s", Mix_GetError());
+    Mix_CloseAudio();
+    SDL_Quit();
+    return -1;
+}
+
+
+
     while (isOpen)
     {
         SDL_Event events;
@@ -95,14 +114,16 @@ int vue(Graph *G)
                                  //printf("\ndonner le cout:");
                                 // scanf("%d",&le_cout);
                                  i+=40;
-                                 text(pRenderer,(char *)"Saisir le cout de l'arret",17,830,i);
+                                 text(pRenderer,(char *)"Saisir le cout de l'arret",17,1000,i);
+                                // audioAlert();
+                                Mix_PlayMusic(music, 1);
                                  boolPointA=false;
                                  boolPointB=false;
 
 
                             }
                     }else {
-                        if(mouse.x<800){
+                        if(mouse.x<1000){
 
                             rect1.x=mouse.x;
                             rect1.y=mouse.y;
@@ -152,7 +173,7 @@ int vue(Graph *G)
             }
         }
 
-    repere(pRenderer);
+   // repere(pRenderer);
 
 
  /*
@@ -163,7 +184,9 @@ int vue(Graph *G)
     }
 
 
-   // TTF_Quit();
+    TTF_Quit();
+    Mix_FreeMusic(music);
+    Mix_CloseAudio();
     SDL_DestroyRenderer(pRenderer);
     SDL_DestroyWindow(pWindow);
     SDL_Quit();
