@@ -1,9 +1,14 @@
 #ifndef HEADERS_H_INCLUDED
 #define HEADERS_H_INCLUDED
 
+
+#include <SDL2/SDL.h>
+#include <cstdlib>
 #include <stdio.h>
 #include <stdlib.h>
-#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
+
 
 
 
@@ -27,7 +32,11 @@ Element **tab;
 }Graph;
 
 
-
+typedef struct{
+    int valeur;
+    int x;
+    int y;
+}BellmanTable;
 
 /*typedef struct{
 Element *head;

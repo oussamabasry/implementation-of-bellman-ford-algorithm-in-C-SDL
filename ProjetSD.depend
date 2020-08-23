@@ -2,10 +2,13 @@
 1597364747 source:c:\users\hp\desktop\projetsd\metier.cpp
 	"headers.h"
 
-1597857752 c:\users\hp\desktop\projetsd\headers.h
+1598031350 c:\users\hp\desktop\projetsd\headers.h
+	<SDL2/SDL.h>
+	<cstdlib>
 	<stdio.h>
 	<stdlib.h>
-	<SDL2/SDL.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
 
 1583894369 c:\sdl\include\sdl2\sdl.h
 	"SDL_main.h"
@@ -361,18 +364,11 @@
 	"begin_code.h"
 	"close_code.h"
 
-1597849109 source:c:\users\hp\desktop\projetsd\main.cpp
-	<stdio.h>
-	<stdlib.h>
+1598043887 source:c:\users\hp\desktop\projetsd\main.cpp
 	"headers.h"
 
-1597871192 source:c:\users\hp\desktop\projetsd\vue.cpp
-	<SDL2/SDL.h>
-	<cstdlib>
-	<SDL2/SDL_ttf.h>
-	<SDL2/SDL_mixer.h>
+1598009700 source:c:\users\hp\desktop\projetsd\vue.cpp
 	"headers.h"
-	<string.h>
 
 1547325890 c:\sdl\include\sdl2\sdl_ttf.h
 	"SDL.h"
@@ -387,4 +383,6 @@
 	"SDL_version.h"
 	"begin_code.h"
 	"close_code.h"
+
+1598009557 source:c:\users\hp\desktop\projetsd\implialgorithme.cpp
 

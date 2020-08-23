@@ -1,9 +1,5 @@
-#include <SDL2/SDL.h>
-#include <cstdlib>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_mixer.h>
 #include "headers.h"
-#include<string.h>
+
 
 
 
@@ -43,6 +39,8 @@ int vue(Graph *G)
     SDL_Point mouse;
     SDL_Point pointA;
     SDL_Point pointB;
+    SDL_Point departLine;
+    SDL_Point arriveLine;
     int le_cout;
 
     bool boolPointA=false;
@@ -53,7 +51,7 @@ int vue(Graph *G)
 
     Element *searchElem;
    /* TTF_Font *police = NULL;
-    police = TTF_OpenFont("arial.ttf", 20);
+    police = TTF_OpenFont("arial.Qttf", 20);
     SDL_Surface* text = TTF_RenderText_Blended(police, "Algorithme de bellman ford", SDL_Color{ 0, 255, 0, 255 });
     SDL_Texture* texture = SDL_CreateTextureFromSurface(pRenderer, text);
     SDL_Rect position;
@@ -110,28 +108,47 @@ if (music == nullptr)
                                  pointB.y=mouse.y;
                                  SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 255);
                                  if(pointA.x<pointB.x && pointA.y<pointB.y){
-                                    SDL_RenderDrawLine(pRenderer, pointA.x+50, pointA.y+50, pointB.x, pointB.y);
+                                     departLine.x=pointA.x+50;departLine.y=pointA.y+50;
+                                     arriveLine.x=pointB.x;arriveLine.y=pointB.y;
+                                     SDL_RenderDrawLine(pRenderer, departLine.x, departLine.y, arriveLine.x, arriveLine.y);
                                  }else if(pointA.x>pointB.x && pointA.y<pointB.y){
-                                   SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y+50, pointB.x+50, pointB.y);
+                                     departLine.x=pointA.x;departLine.y=pointA.y+50;
+                                     arriveLine.x=pointB.x+50;arriveLine.y=pointB.y;
+                                   SDL_RenderDrawLine(pRenderer, departLine.x, departLine.y, arriveLine.x, arriveLine.y);
                                  }else if(pointA.x>pointB.x && pointA.y>pointB.y){
-                                    SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y, pointB.x+50, pointB.y+50);
+                                     departLine.x=pointA.x;departLine.y=pointA.y;
+                                     arriveLine.x=pointB.x+50;arriveLine.y=pointB.y+50;
+                                    SDL_RenderDrawLine(pRenderer, departLine.x, departLine.y, arriveLine.x, arriveLine.y);
                                  }else if(pointA.x<pointB.x && pointA.y>pointB.y){
-                                    SDL_RenderDrawLine(pRenderer, pointA.x+50, pointA.y, pointB.x, pointB.y+50);
+                                      departLine.x=pointA.x+50;departLine.y=pointA.y;
+                                     arriveLine.x=pointB.x;arriveLine.y=pointB.y+50;
+                                    SDL_RenderDrawLine(pRenderer, departLine.x, departLine.y, arriveLine.x, arriveLine.y);
                                  }else if(pointA.x==pointB.x && pointA.y<pointB.y){
-                                   SDL_RenderDrawLine(pRenderer, pointA.x+25, pointA.y+50, pointB.x+25, pointB.y);
+                                     departLine.x=pointA.x+25;departLine.y=pointA.y+50;
+                                     arriveLine.x=pointB.x+25;arriveLine.y=pointB.y;
+                                   SDL_RenderDrawLine(pRenderer, departLine.x, departLine.y, arriveLine.x, arriveLine.y);
                                  }else if(pointA.x==pointB.x && pointA.y>pointB.y){
-                                 SDL_RenderDrawLine(pRenderer, pointA.x+25, pointA.y, pointB.x+25, pointB.y+50);
+                                     departLine.x=pointA.x+25;departLine.y=pointA.y;
+                                     arriveLine.x=pointB.x+25;arriveLine.y=pointB.y+50;
+                                   SDL_RenderDrawLine(pRenderer, departLine.x, departLine.y, arriveLine.x, arriveLine.y);
+
                                  }else if(pointA.y==pointB.y && pointA.x>pointB.x){
-                                   SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y+25, pointB.x+50, pointB.y+25);
+                                     departLine.x=pointA.x;departLine.y=pointA.y+25;
+                                     arriveLine.x=pointB.x+50;arriveLine.y=pointB.y+25;
+                                   SDL_RenderDrawLine(pRenderer, departLine.x, departLine.y, arriveLine.x, arriveLine.y);
+
                                  }else if(pointA.y==pointB.y && pointA.x<pointB.x){
-                                     SDL_RenderDrawLine(pRenderer, pointA.x+50, pointA.y+25, pointB.x, pointB.y+25);
+                                     departLine.x=pointA.x+50;departLine.y=pointA.y+25;
+                                     arriveLine.x=pointB.x;arriveLine.y=pointB.y+25;
+                                   SDL_RenderDrawLine(pRenderer, departLine.x, departLine.y, arriveLine.x, arriveLine.y);
+
                                  }
 
                                  SDL_RenderPresent(pRenderer);
                                  //printf("\ndonner le cout:");
                                 // scanf("%d",&le_cout);
                                  i+=40;
-                                 text(pRenderer,(char *)"Saisir le cout de l'arret",17,1000,i);
+                                 //text(pRenderer,(char *)"Saisir le cout de l'arret",17,1000,i);
                                 // audioAlert();
                                 Mix_PlayMusic(music, 1);
                                  boolPointA=false;
@@ -173,39 +190,12 @@ if (music == nullptr)
                   if(events.key.keysym.sym == SDLK_ESCAPE){
                         SDL_Point mileu;
 
-                        if(pointA.x<pointB.x && pointA.y<pointB.y){
-                                   // SDL_RenderDrawLine(pRenderer, pointA.x+50, pointA.y+50, pointB.x, pointB.y);
-                                    mileu.x=((pointA.x+50+pointB.x)/2);
-                                    mileu.y=((pointA.y+50+pointB.y)/2);
-                                 }else if(pointA.x>pointB.x && pointA.y<pointB.y){
-                                   //SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y+50, pointB.x+50, pointB.y);
-                                   mileu.x=((pointA.x+pointB.x+50)/2);
-                                   mileu.y=((pointA.y+50+pointB.y)/2);
-                                 }else if(pointA.x>pointB.x && pointA.y>pointB.y){
-                                   // SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y, pointB.x+50, pointB.y+50);
-                                    mileu.x=((pointA.x+pointB.x+50)/2);
-                                    mileu.y=((pointA.y+pointB.y+50)/2);
-                                 }else if(pointA.x<pointB.x && pointA.y>pointB.y){
-                                    //SDL_RenderDrawLine(pRenderer, pointA.x+50, pointA.y, pointB.x, pointB.y+50);
-                                    mileu.x=((pointA.x+50+pointB.x)/2);
-                                    mileu.y=((pointA.y+pointB.y+50)/2);
-                                 }else if(pointA.x==pointB.x && pointA.y<pointB.y){
-                                   //SDL_RenderDrawLine(pRenderer, pointA.x+25, pointA.y+50, pointB.x+25, pointB.y);
-                                   mileu.x=((pointA.x+25+pointB.x+25)/2);
-                                   mileu.y=((pointA.y+50+pointB.y)/2);
-                                 }else if(pointA.x==pointB.x && pointA.y>pointB.y){
-                                 //SDL_RenderDrawLine(pRenderer, pointA.x+25, pointA.y, pointB.x+25, pointB.y+50);
-                                 mileu.x=((pointA.x+25+pointB.x+25)/2)-(((pointA.x+25+pointB.x+25)/2)/10);
-                                 mileu.y=((pointA.y+pointB.y+50)/2);
-                                 }else if(pointA.y==pointB.y && pointA.x>pointB.x){
-                                   //SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y+25, pointB.x+50, pointB.y+25);
-                                   mileu.x=((pointA.x+pointB.x+50)/2);
-                                   mileu.y=((pointA.y+25+pointB.y+25)/2);
-                                 }else if(pointA.y==pointB.y && pointA.x<pointB.x){
-                                     //SDL_RenderDrawLine(pRenderer, pointA.x+50, pointA.y+25, pointB.x, pointB.y+25);
-                                     mileu.x=((pointA.x+50+pointB.x)/2);
-                                     mileu.y=((pointA.y+25+pointB.y+25)/2);
-                                 }
+                        mileu.x=(departLine.x+arriveLine.x)/2;
+                        mileu.y=(departLine.y+arriveLine.y)/2;
+                       if(!(pointA.x==pointB.x && pointA.y>pointB.y)){
+                         mileu.x=(mileu.x+departLine.x)/2;
+                         mileu.y=(mileu.y+departLine.y)/2;
+                       }
 
 
                         searchElem=searchTab(G,pointA.x/100,pointA.y/100);
@@ -224,7 +214,7 @@ if (music == nullptr)
             }
         }
 
-    repere(pRenderer);
+    //repere(pRenderer);
 
 
  /*
