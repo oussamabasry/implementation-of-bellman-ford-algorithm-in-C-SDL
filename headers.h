@@ -16,6 +16,7 @@
 typedef  struct {
     int x;
     int y;
+    int index;
 }Data;
 
 typedef struct Elem{
@@ -44,8 +45,8 @@ Element *head;
 
 
 Data *createData(int x,int y);
-Element* createElement(int x,int y,int valuation);
-void addElementList(Element **L,int x,int y,int valuation);
+Element* createElement(int x,int y,int valuation, int index);
+void addElementList(Element **L,Element *suiv,int valuation);
 void displayList(Element *L);
 void displayGraph(Graph *G);
 Graph *createGraph(int numberNode,bool orionted);

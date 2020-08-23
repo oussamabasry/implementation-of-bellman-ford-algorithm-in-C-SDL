@@ -49,7 +49,7 @@ int vue(Graph *G)
     char coutArret[10]="";
     int i=5;
 
-    Element *searchElem;
+    Element *searchElem,*searchElem1;
    /* TTF_Font *police = NULL;
     police = TTF_OpenFont("arial.Qttf", 20);
     SDL_Surface* text = TTF_RenderText_Blended(police, "Algorithme de bellman ford", SDL_Color{ 0, 255, 0, 255 });
@@ -199,14 +199,27 @@ if (music == nullptr)
 
 
                         searchElem=searchTab(G,pointA.x/100,pointA.y/100);
-                        addElementList(&searchElem,pointB.x/100,pointB.y/100,atoi(coutArret));
-                        text(pRenderer,coutArret,15,mileu.x,mileu.y);
+                        searchElem1=searchTab(G,pointB.x/100,pointB.y/100);
+                        if(searchElem1!=NULL && searchElem!=NULL){
+                            addElementList(&searchElem,searchElem1,atoi(coutArret));
+                            text(pRenderer,coutArret,15,mileu.x,mileu.y);
+                        }
+
 
                   }
                   if(conditionNumber(events)){
                     strcat(coutArret,SDL_GetKeyName(events.key.keysym.sym));
                   }
+                  if(events.key.keysym.sym == SDLK_a){
+                      printf("\n\n\n **********************\n\n");
+                      for(int i=0;i<G->numberNode;i++)
+                        {
+                           displayList(G->tab[i]);
+                            printf("\n");
+                       }
+                  }
                 }
+
            default: continue;
 
 
