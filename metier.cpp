@@ -15,7 +15,6 @@ Element *elem;
 elem=(Element*)malloc(sizeof(Element));
 elem->data=createData(x,y,index);
 elem->valuation=valuation;
-elem->visited=false;
 elem->next=NULL;
 return elem;
 }
@@ -28,6 +27,7 @@ if(*L==NULL){
     *L=elem;
     return;
 }
+
 Element *p; p=*L;
 while(p->next!=NULL)
     p=p->next;

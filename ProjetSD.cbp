@@ -48,6 +48,7 @@
 			<Add after="XCOPY $(#sdl2)\bin\*.dll $(TARGET_OUTPUT_DIR) /D /Y" />
 		</ExtraCommands>
 		<Unit filename="headers.h" />
+		<Unit filename="impliAlgorithme.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="metier.cpp" />
 		<Unit filename="vue.cpp" />

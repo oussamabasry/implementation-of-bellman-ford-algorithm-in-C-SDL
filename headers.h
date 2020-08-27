@@ -21,7 +21,6 @@ typedef  struct {
 
 typedef struct Elem{
 Data *data;
-bool visited;
 int valuation;
 struct Elem *next;
 }Element;
@@ -59,4 +58,5 @@ Element *searchTab(Graph *G,int x,int y);
 void text(SDL_Renderer* pRenderer, char *text,int fontSize, int x,int y);
 bool conditionNumber(SDL_Event event);
 void audioAlert();
+int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint);
 #endif // HEADERS_H_INCLUDED

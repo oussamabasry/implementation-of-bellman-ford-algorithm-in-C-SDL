@@ -208,15 +208,30 @@ if (music == nullptr)
 
                   }
                   if(conditionNumber(events)){
-                    strcat(coutArret,SDL_GetKeyName(events.key.keysym.sym));
+                        if(events.key.keysym.sym!=SDLK_m)
+                       strcat(coutArret,SDL_GetKeyName(events.key.keysym.sym));
+                       else
+                        strcat(coutArret,"-");
                   }
                   if(events.key.keysym.sym == SDLK_a){
-                      printf("\n\n\n **********************\n\n");
+                      /*printf("\n\n\n **********************\n\n");
                       for(int i=0;i<G->numberNode;i++)
                         {
                            displayList(G->tab[i]);
                             printf("\n");
-                       }
+                       }*/
+                       SDL_Point p1,p2;
+                       printf("x1:  ");
+                       scanf("%d",&p1.x);
+                       printf("y1:  ");
+                       scanf("%d", &p1.y);
+
+                        printf("x2:  ");
+                       scanf("%d",&p2.x);
+                       printf("y2:  ");
+                       scanf("%d", &p2.y);
+
+                       Bellman(G,p1,p2);
                   }
                 }
 
@@ -311,7 +326,8 @@ if(events.key.keysym.sym == SDLK_0 ||
    events.key.keysym.sym == SDLK_6 ||
    events.key.keysym.sym == SDLK_7 ||
    events.key.keysym.sym == SDLK_8 ||
-   events.key.keysym.sym == SDLK_9 ){
+   events.key.keysym.sym == SDLK_9 ||
+   events.key.keysym.sym == SDLK_m ){
     return true;
    }
  return false;
