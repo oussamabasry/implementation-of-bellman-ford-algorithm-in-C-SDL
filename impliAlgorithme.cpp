@@ -8,34 +8,55 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint){
 
 
     for(int i=0;i<G->numberNode;i++){
-        bellmanTable[0][i].valeur=INFINI;
-        bellmanTable[0][i].x=INFINI;
-        bellmanTable[0][i].y=INFINI;
+            for(int j=0;j<G->numberNode;j++){
+                 bellmanTable[i][j].valeur=INFINI;
+                 bellmanTable[i][j].x=INFINI;
+                 bellmanTable[i][j].y=INFINI;
+            }
+
     }
 
     Element *searchPoint=searchTab(G,initPoint.x,initPoint.y);
     if(searchPoint==NULL)
         return 0;
+
     bellmanTable[0][searchPoint->data->index].valeur=0;
     Element *balayage;
 
+
     for(int i=1;i<G->numberNode;i++){
+
       bellmanTable[i][searchPoint->data->index].valeur=0;
 
     for(int j=0;j<G->numberNode;j++){
-          balayage=G->tab[j]->next;
-        while(balayage!=NULL){
 
-            if(bellmanTable[i-1][balayage->data->index].valeur > bellmanTable[i-1][G->tab[j]->data->index].valeur+ balayage->valuation  ){
-              bellmanTable[i][balayage->data->index].valeur=bellmanTable[i-1][G->tab[j]->data->index].valeur+ balayage->valuation;
-              bellmanTable[i][balayage->data->index].x=G->tab[j]->data->x;
-              bellmanTable[i][balayage->data->index].y=G->tab[j]->data->y;
-            }else{
-              bellmanTable[i][balayage->data->index].valeur=bellmanTable[i-1][balayage->data->index].valeur;
-              bellmanTable[i][balayage->data->index].x=bellmanTable[i-1][balayage->data->index].x;
-              bellmanTable[i][balayage->data->index].y=bellmanTable[i-1][balayage->data->index].y;
+        balayage=G->tab[j]->next;
+        while( balayage != NULL ){
+
+             BellmanTable depart = bellmanTable[i-1][G->tab[j]->data->index];
+             BellmanTable arrive = bellmanTable[i-1][balayage->data->index];
+             int val = balayage->valuation;
+
+            if( arrive.valeur > depart.valeur + val ){
+
+              bellmanTable[i][balayage->data->index].valeur = depart.valeur + val;
+              bellmanTable[i][balayage->data->index].x = G->tab[j]->data->x;
+              bellmanTable[i][balayage->data->index].y = G->tab[j]->data->y;
+
+            }else if(arrive.valeur <= depart.valeur + val && depart.valeur + val < bellmanTable[i][balayage->data->index].valeur){
+
+              bellmanTable[i][balayage->data->index].valeur = arrive.valeur;
+              bellmanTable[i][balayage->data->index].x = arrive.x;
+              bellmanTable[i][balayage->data->index].y = arrive.y;
+
             }
 
+           balayage=balayage->next;
+
+        }
+    }
+    }
+/*
           if(bellmanTable[i-1][G->tab[j]->data->index].valeur>bellmanTable[i-1][balayage->data->index].valeur+ balayage->valuation ){
               bellmanTable[i][G->tab[j]->data->index].valeur=bellmanTable[i-1][balayage->data->index].valeur+ balayage->valuation;
               bellmanTable[i][G->tab[j]->data->index].x=balayage->data->x;
@@ -44,18 +65,12 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint){
               bellmanTable[i][G->tab[j]->data->index].valeur=bellmanTable[i-1][G->tab[j]->data->index].valeur;
               bellmanTable[i][G->tab[j]->data->index].x=bellmanTable[i-1][G->tab[j]->data->index].x;
               bellmanTable[i][G->tab[j]->data->index].y=bellmanTable[i-1][G->tab[j]->data->index].y;
-            }
-
-            balayage=balayage->next;
-        }
-    }
-    bellmanTable[i][searchPoint->data->index].valeur=0;
-    }
+            }*/
 
 
 
 
-
+    //bellmanTable[i][searchPoint->data->index].valeur=0;
 
 
 
@@ -68,6 +83,10 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint){
       }
 
 
+
+
+
+/*
     BellmanTable chemin[100];
     int nb=0;
     int index;
@@ -79,9 +98,9 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint){
      nb++;
 
 
-    for(int i=G->numberNode-1;i>1;i--){
-        printf("\nhi");
-        index=searchTab(G,NodeSearch.x,NodeSearch.y)->data->index;
+    for(int i=G->numberNode-1;i>0;i--){
+
+         index=searchTab(G,NodeSearch.x,NodeSearch.y)->data->index;
          chemin[nb].x=bellmanTable[i][index].x;
          chemin[nb].y=bellmanTable[i][index].y;
          chemin[nb].valeur=bellmanTable[i][index].valeur;
@@ -95,5 +114,7 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint){
     for(int i=0;i<nb-1;i++){
         printf("\n (%d,%d):%d      ",chemin[i].x,chemin[i].y,chemin[i].valeur);
     }
+
+*/
 return 1;
 }

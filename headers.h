@@ -38,9 +38,7 @@ typedef struct{
     int y;
 }BellmanTable;
 
-/*typedef struct{
-Element *head;
-}AdjencyList;*/
+
 
 
 Data *createData(int x,int y);
