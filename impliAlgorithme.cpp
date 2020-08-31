@@ -37,7 +37,7 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint, SDL_Renderer* p
              BellmanTable arrive = bellmanTable[i-1][balayage->data->index];
              int val = balayage->data->valuation;
 
-            if( arrive.valeur > depart.valeur + val ){
+            if( arrive.valeur > depart.valeur + val && depart.valeur + val < bellmanTable[i][balayage->data->index].valeur ){
 
               bellmanTable[i][balayage->data->index].valeur = depart.valeur + val;
               bellmanTable[i][balayage->data->index].x = G->tab[j]->data->x;
@@ -70,7 +70,7 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint, SDL_Renderer* p
 
 
 
-    //bellmanTable[i][searchPoint->data->index].valeur=0;
+
 
 
 
