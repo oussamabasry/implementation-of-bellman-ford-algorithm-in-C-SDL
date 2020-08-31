@@ -344,7 +344,7 @@ void afficherPlusCourtChemin(SDL_Renderer* pRenderer, BellmanTable chemin[],int 
             SDL_RenderDrawLine(pRenderer, departLine.x, departLine.y, arriveLine.x, arriveLine.y);
         }
 
-        rect.x=rect.x+150;
+        rect.x=rect.x+100;
 
     }
 

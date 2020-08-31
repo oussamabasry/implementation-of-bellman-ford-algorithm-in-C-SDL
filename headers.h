@@ -16,12 +16,12 @@
 typedef  struct {
     int x;
     int y;
+    int valuation;
     int index;
 }Data;
 
 typedef struct Elem{
 Data *data;
-int valuation;
 struct Elem *next;
 }Element;
 

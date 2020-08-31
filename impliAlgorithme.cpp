@@ -35,7 +35,7 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint, SDL_Renderer* p
 
              BellmanTable depart = bellmanTable[i-1][G->tab[j]->data->index];
              BellmanTable arrive = bellmanTable[i-1][balayage->data->index];
-             int val = balayage->valuation;
+             int val = balayage->data->valuation;
 
             if( arrive.valeur > depart.valeur + val ){
 
@@ -82,12 +82,17 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint, SDL_Renderer* p
       printf("\n");
       }
 
+      bool cycleAbsorb = false;
+     for(int i=0;i<G->numberNode;i++){
+        if( bellmanTable[G->numberNode-2][i].valeur != bellmanTable[G->numberNode-1][i].valeur ){
+            cycleAbsorb=true;
+            break;
+        }
+     }
 
 
-
-
-
-    BellmanTable chemin[100];
+  if(cycleAbsorb == false){
+     BellmanTable chemin[100];
     int nb=0;
     int index;
     SDL_Point NodeSearch;
@@ -98,8 +103,6 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint, SDL_Renderer* p
     index=searchTab(G,NodeSearch.x,NodeSearch.y)->data->index;
     chemin[nb].valeur=bellmanTable[G->numberNode-1][index].valeur;
      nb++;
-
-
 
     for(int i=G->numberNode-1;i>0;i--){
 
@@ -119,7 +122,13 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint, SDL_Renderer* p
 
             }
 
- afficherPlusCourtChemin(pRenderer,chemin,nb);
+       afficherPlusCourtChemin(pRenderer,chemin,nb);
+
+  }else{
+    text(pRenderer,(char *)"Le graphe contient un circuit absorbant !!",18,450,525,255,0,127);
+  }
+
+
 
 
 

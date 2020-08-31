@@ -14,7 +14,7 @@ Element* createElement(int x,int y,int valuation, int index){
 Element *elem;
 elem=(Element*)malloc(sizeof(Element));
 elem->data=createData(x,y,index);
-elem->valuation=valuation;
+elem->data->valuation=valuation;
 elem->next=NULL;
 return elem;
 }
@@ -45,7 +45,7 @@ Element *elem;
 
 void displayList(Element *L){
 while(L!=NULL){
-    printf("(%d,%d,%d) - ",L->data->x,L->data->y,L->valuation);
+    printf("(%d,%d,%d) - ",L->data->x,L->data->y,L->data->valuation);
     L=L->next;
 }
 }
