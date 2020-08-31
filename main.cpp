@@ -7,7 +7,7 @@ int main(int argc, char* argv[]){
 
 Graph *G;
 
-G=InitializGraphe(false);
+G=InitializGraphe();
 vue(G);
 
 return 0;

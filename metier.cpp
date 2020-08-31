@@ -57,7 +57,6 @@ Graph *gr;
 int i;
 
 gr=(Graph*)malloc(sizeof(Graph));
-gr->isOriented=isOriented;
 gr->numberNode=numberNode;
 gr->tab=(Element**)malloc(sizeof(Element**)*gr->numberNode);
 for(i=0;i<gr->numberNode;i++)
@@ -68,12 +67,11 @@ for(i=0;i<gr->numberNode;i++)
 return gr;
 }
 
-Graph *InitializGraphe(bool isOriented){
+Graph *InitializGraphe(){
 Graph *gr;
 
 
 gr=(Graph*)malloc(sizeof(Graph));
-gr->isOriented=isOriented;
 gr->numberNode=0;
 gr->tab=(Element**)malloc(sizeof(Element**)*1000);
 /*gr->tab=(Element**)malloc(sizeof(Element**)*gr->numberNode);
@@ -85,33 +83,6 @@ for(i=0;i<gr->numberNode;i++)
 return gr;
 }
 
-
-
-void displayGraph(Graph *G){
-int i;
-Element *elem;
-printf("\n ******************* Display ************************\n\n");
-printf("(element): -->xy:edge -->y:edge -->.....\n\n");
-for(i=0;i<G->numberNode;i++)
-{    elem=G->tab[i];
-    while(elem!=NULL){
-    printf("%d%d -> ",elem->data->x,elem->data->y);
-    elem=elem->next;
-   }
-   printf("null\n");
-}
-
-}
-
-
-int searchTabNode(Graph *G,int x,int y){
-  for(int i=0;i<G->numberNode;i++)
-   {
-      if(G->tab[i]->data->x==x&&G->tab[i]->data->y==y)
-        return 1;
-   }
- return 0;
-}
 
 Element* searchTab(Graph *G,int x,int y){
   for(int i=0;i<G->numberNode;i++)

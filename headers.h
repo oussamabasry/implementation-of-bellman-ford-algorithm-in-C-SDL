@@ -26,7 +26,6 @@ struct Elem *next;
 }Element;
 
 typedef struct{
-bool isOriented;
 int numberNode;
 Element **tab;
 }Graph;
@@ -45,17 +44,15 @@ Data *createData(int x,int y);
 Element* createElement(int x,int y,int valuation, int index);
 void addElementList(Element **L,Element *suiv,int valuation);
 void displayList(Element *L);
-void displayGraph(Graph *G);
-Graph *createGraph(int numberNode,bool orionted);
+Graph *createGraph(int numberNode);
 int vue(Graph *G);
-void repere( SDL_Renderer* pRenderer);
-Graph *InitializGraphe(bool isOriented);
+Graph *InitializGraphe();
 void addElementNode(Graph *G,int x,int y,int valuation);
-int searchTabNode(Graph *G,int x,int y);
 Element *searchTab(Graph *G,int x,int y);
 void text(SDL_Renderer* pRenderer, char *text,int fontSize, int x,int y, int R, int G, int B);
 bool conditionNumber(SDL_Event event);
 void audioAlert();
 int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint, SDL_Renderer* pRenderer);
- void afficherPlusCourtChemin(SDL_Renderer* pRenderer, BellmanTable chemin[],int nb);
+void afficherPlusCourtChemin(SDL_Renderer* pRenderer, BellmanTable chemin[],int nb);
+
 #endif // HEADERS_H_INCLUDED

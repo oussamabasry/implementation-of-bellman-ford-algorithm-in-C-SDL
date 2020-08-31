@@ -28,28 +28,6 @@ int vue(Graph *G)
     SDL_SetWindowTitle(pWindow,"Projet de Graphes");
 
 
-
-
-    bool isOpen{ true };
-    SDL_Rect rect1={10,10,50,50};
-    SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
-    SDL_RenderClear(pRenderer);
-    SDL_RenderPresent(pRenderer);
-
-    SDL_Point mouse;
-    SDL_Point pointA;
-    SDL_Point pointB;
-    SDL_Point departLine;
-    SDL_Point arriveLine;
-
-    bool boolPointA=false;
-    bool boolPointB=false;
-    char coutArret[10]="";
-    int i=5;
-
-    Element *searchElem,*searchElem1;
-
-
 if (Mix_OpenAudio(96000, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) < 0)
     {
         SDL_Log("Erreur initialisation SDL_mixer : %s", Mix_GetError());
@@ -66,7 +44,7 @@ if (music == nullptr)
     return -1;
 }
 
-// les buttons
+// les buttons de l'interface
 
 SDL_Rect rect2={1000,0,7,500};
 SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 0);
@@ -98,10 +76,27 @@ SDL_RenderPresent(pRenderer);
 
 
 
+//Declaration des variables
+    bool isOpen{ true };
+    SDL_Rect rect1={10,10,50,50};
+    SDL_Point mouse;
+    SDL_Point pointA;
+    SDL_Point pointB;
+    SDL_Point departLine;
+    SDL_Point arriveLine;
+    SDL_Point p1,p2;
+    Element *searchElem,*searchElem1;
+    bool boolPointA=false;
+    bool boolPointB=false;
+    bool  source=false;
+    bool destinatin=false;
+    char coutArret[10]="";
+    int i=5;
 
 
-bool  source=false, destinatin=false;
-SDL_Point p1,p2;
+
+
+
 
     while (isOpen)
     {
@@ -130,22 +125,11 @@ SDL_Point p1,p2;
                       }else if(source==true){
                          p1.x=(events.motion.x-(events.motion.x%100))/100;
                          p1.y=(events.motion.y-(events.motion.y%100))/100;
-                          /*  rect2={10,10,50,50};
-                            rect2.x=p1.x;
-                            rect2.y=p1.y;
-                            SDL_SetRenderDrawColor(pRenderer, 255, 204, 255, 255);
-                            SDL_RenderFillRect(pRenderer, &rect2);
-                            SDL_RenderPresent(pRenderer);*/
+
                          source=false;
                       }else if(destinatin==true){
                          p2.x=(events.motion.x-(events.motion.x%100))/100;
                          p2.y=(events.motion.y-(events.motion.y%100))/100;
-                        /* rect2={10,10,50,50};
-                            rect2.x=p2.x;
-                            rect2.y=p2.y;
-                            SDL_SetRenderDrawColor(pRenderer, 255, 204, 255, 255);
-                            SDL_RenderFillRect(pRenderer, &rect2);
-                            SDL_RenderPresent(pRenderer);*/
                          destinatin=false;
                       }else{
 
@@ -200,15 +184,10 @@ SDL_Point p1,p2;
                                  }
 
                                  SDL_RenderPresent(pRenderer);
-                                 //printf("\ndonner le cout:");
-                                // scanf("%d",&le_cout);
                                  i+=40;
-                                 //text(pRenderer,(char *)"Saisir le cout de l'arret",17,1000,i);
-                                // audioAlert();
                                 Mix_PlayMusic(music, 1);
                                  boolPointA=false;
                                  boolPointB=false;
-
 
                             }
                     }else {
@@ -269,15 +248,7 @@ SDL_Point p1,p2;
                        else
                         strcat(coutArret,"-");
                   }
-                  if(events.key.keysym.sym == SDLK_a){
-                      /*printf("\n\n\n **********************\n\n");
-                      for(int i=0;i<G->numberNode;i++)
-                        {
-                           displayList(G->tab[i]);
-                            printf("\n");
-                       }*/
 
-                  }
                 }
 
            default: continue;
@@ -287,14 +258,8 @@ SDL_Point p1,p2;
             }
         }
 
-    //repere(pRenderer);
 
 
- /*
-        SDL_SetRenderDrawColor(pRenderer, 0, 255, 0, 255);
-        SDL_RenderCopy(pRenderer, texture, nullptr, &position);
-        SDL_RenderPresent(pRenderer);
- */
     }
 
 
@@ -309,32 +274,6 @@ SDL_Point p1,p2;
 
 }
 
-void repere( SDL_Renderer* pRenderer){
-
-   SDL_Point pointA;
-   SDL_Point pointB;
-   int i;
-
-   for(i=0;i<=900;i+=100){
-    pointA.y=0;
-    pointB.y=600;
-    pointA.x=i;
-    pointB.x=i;
-    SDL_SetRenderDrawColor(pRenderer, 0, 255, 255, 255);
-    SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y, pointB.x, pointB.y);
-    SDL_RenderPresent(pRenderer);
-   }
-    for(i=0;i<800;i+=100){
-    pointA.y=i;
-    pointB.y=i;
-    pointA.x=0;
-    pointB.x=900;
-    SDL_SetRenderDrawColor(pRenderer, 0, 255, 255, 255);
-    SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y, pointB.x, pointB.y);
-    SDL_RenderPresent(pRenderer);
-   }
-
-}
 
 
 void text(SDL_Renderer* pRenderer, char *txt,int fontSize, int x, int y, int R,int G, int B){
@@ -380,7 +319,7 @@ if(events.key.keysym.sym == SDLK_0 ||
 
 
 void afficherPlusCourtChemin(SDL_Renderer* pRenderer, BellmanTable chemin[],int nb){
-     SDL_Rect rect={200,570,50,50};
+     SDL_Rect rect={300,570,50,50};
      SDL_Point departLine={},arriveLine;
      char coordonnes[20]="";
      char buffer[20];
@@ -408,7 +347,9 @@ void afficherPlusCourtChemin(SDL_Renderer* pRenderer, BellmanTable chemin[],int 
         rect.x=rect.x+150;
 
     }
-    strcpy(coordonnes,"Le cout est : ");
+
+     text(pRenderer,(char *)"Voilà le plus court chemin",18,450,525,255,0,127);
+    strcpy(coordonnes,"Le cout minimal c'est : ");
      itoa(chemin[0].valeur,buffer,10);
     strcat(coordonnes,buffer);
   text(pRenderer,coordonnes,18,10,590,255,255,0);
