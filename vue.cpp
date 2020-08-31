@@ -18,7 +18,7 @@ int vue(Graph *G)
     SDL_Window* pWindow{ nullptr };
     SDL_Renderer* pRenderer{ nullptr };
 
-    if (SDL_CreateWindowAndRenderer(1300,600, SDL_WINDOW_SHOWN, &pWindow, &pRenderer) < 0)
+    if (SDL_CreateWindowAndRenderer(1200,600, SDL_WINDOW_SHOWN, &pWindow, &pRenderer) < 0)
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "[DEBUG] > %s", SDL_GetError());
         SDL_Quit();
@@ -79,6 +79,30 @@ if (music == nullptr)
 }
 
 
+SDL_Rect rect2={1000,0,7,700};
+SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 0);
+SDL_RenderFillRect(pRenderer, &rect2);
+SDL_RenderPresent(pRenderer);
+
+rect2={1030,100,155,60};
+SDL_SetRenderDrawColor(pRenderer, 255, 255, 0, 255);
+SDL_RenderFillRect(pRenderer, &rect2);
+SDL_RenderPresent(pRenderer);
+text(pRenderer,"Indiquer la source",16,1052,125,0,0,0);
+
+rect2={1030,200,155,60};
+SDL_SetRenderDrawColor(pRenderer, 255, 255, 0, 255);
+SDL_RenderFillRect(pRenderer, &rect2);
+SDL_RenderPresent(pRenderer);
+text(pRenderer,"Indiquer la destination",16,1035,225,0,0,0);
+
+rect2={1030,300,155,60};
+SDL_SetRenderDrawColor(pRenderer, 255, 255, 0, 255);
+SDL_RenderFillRect(pRenderer, &rect2);
+SDL_RenderPresent(pRenderer);
+text(pRenderer,"Le plus court chemin",16,1038,325,0,0,0);
+
+
 
     while (isOpen)
     {
@@ -106,7 +130,7 @@ if (music == nullptr)
                             }else if(boolPointA==true&& boolPointB==false){
                                  pointB.x=mouse.x;
                                  pointB.y=mouse.y;
-                                 SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 255);
+                                 SDL_SetRenderDrawColor(pRenderer, 255, 0, 127, 255);
                                  if(pointA.x<pointB.x && pointA.y<pointB.y){
                                      departLine.x=pointA.x+50;departLine.y=pointA.y+50;
                                      arriveLine.x=pointB.x;arriveLine.y=pointB.y;
@@ -161,7 +185,7 @@ if (music == nullptr)
 
                             rect1.x=mouse.x;
                             rect1.y=mouse.y;
-                            SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 255);
+                            SDL_SetRenderDrawColor(pRenderer, 0, 255, 255, 255);
                             SDL_RenderFillRect(pRenderer, &rect1);
                             SDL_RenderPresent(pRenderer);
 
@@ -172,7 +196,7 @@ if (music == nullptr)
                             strcat(coordonnes," , ");
                             itoa(rect1.y/100,buffer,10);
                             strcat(coordonnes,buffer);
-                            text(pRenderer,coordonnes,17,mouse.x+12,mouse.y+21);
+                            text(pRenderer,coordonnes,17,mouse.x+12,mouse.y+21,0,0,102);
                             strcpy(coordonnes,"");
 
 
@@ -202,7 +226,7 @@ if (music == nullptr)
                         searchElem1=searchTab(G,pointB.x/100,pointB.y/100);
                         if(searchElem1!=NULL && searchElem!=NULL){
                             addElementList(&searchElem,searchElem1,atoi(coutArret));
-                            text(pRenderer,coutArret,15,mileu.x,mileu.y);
+                            text(pRenderer,coutArret,15,mileu.x,mileu.y,255,255,0);
                         }
 
 
@@ -292,7 +316,7 @@ void repere( SDL_Renderer* pRenderer){
 }
 
 
-void text(SDL_Renderer* pRenderer, char *txt,int fontSize, int x, int y){
+void text(SDL_Renderer* pRenderer, char *txt,int fontSize, int x, int y, int R,int G, int B){
 
      if(TTF_Init() <0)
       {
@@ -301,7 +325,7 @@ void text(SDL_Renderer* pRenderer, char *txt,int fontSize, int x, int y){
      }
     TTF_Font *police = NULL;
     police = TTF_OpenFont("arial.ttf", fontSize);
-    SDL_Surface* text = TTF_RenderText_Blended(police,txt , SDL_Color{ 0, 255, 0, 255 });
+    SDL_Surface* text = TTF_RenderText_Blended(police,txt , SDL_Color{ R, G, B, 255 });
     SDL_Texture* texture = SDL_CreateTextureFromSurface(pRenderer, text);
     SDL_Rect position;
     SDL_QueryTexture(texture, nullptr, nullptr, &position.w, &position.h);

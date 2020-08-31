@@ -53,7 +53,7 @@ Graph *InitializGraphe(bool isOriented);
 void addElementNode(Graph *G,int x,int y,int valuation);
 int searchTabNode(Graph *G,int x,int y);
 Element *searchTab(Graph *G,int x,int y);
-void text(SDL_Renderer* pRenderer, char *text,int fontSize, int x,int y);
+void text(SDL_Renderer* pRenderer, char *text,int fontSize, int x,int y, int R, int G, int B);
 bool conditionNumber(SDL_Event event);
 void audioAlert();
 int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint);
