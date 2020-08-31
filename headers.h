@@ -56,5 +56,6 @@ Element *searchTab(Graph *G,int x,int y);
 void text(SDL_Renderer* pRenderer, char *text,int fontSize, int x,int y, int R, int G, int B);
 bool conditionNumber(SDL_Event event);
 void audioAlert();
-int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint);
+int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint, SDL_Renderer* pRenderer);
+ void afficherPlusCourtChemin(SDL_Renderer* pRenderer, BellmanTable chemin[],int nb);
 #endif // HEADERS_H_INCLUDED

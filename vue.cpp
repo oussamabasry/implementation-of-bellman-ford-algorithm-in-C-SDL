@@ -18,7 +18,7 @@ int vue(Graph *G)
     SDL_Window* pWindow{ nullptr };
     SDL_Renderer* pRenderer{ nullptr };
 
-    if (SDL_CreateWindowAndRenderer(1200,600, SDL_WINDOW_SHOWN, &pWindow, &pRenderer) < 0)
+    if (SDL_CreateWindowAndRenderer(1200,670, SDL_WINDOW_SHOWN, &pWindow, &pRenderer) < 0)
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "[DEBUG] > %s", SDL_GetError());
         SDL_Quit();
@@ -41,11 +41,9 @@ int vue(Graph *G)
     SDL_Point pointB;
     SDL_Point departLine;
     SDL_Point arriveLine;
-    int le_cout;
 
     bool boolPointA=false;
     bool boolPointB=false;
-    bool testSaisieCout=false;
     char coutArret[10]="";
     int i=5;
 
@@ -70,7 +68,7 @@ if (music == nullptr)
 
 // les buttons
 
-SDL_Rect rect2={1000,0,7,700};
+SDL_Rect rect2={1000,0,7,500};
 SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 0);
 SDL_RenderFillRect(pRenderer, &rect2);
 SDL_RenderPresent(pRenderer);
@@ -79,21 +77,30 @@ rect2={1030,100,155,60};
 SDL_SetRenderDrawColor(pRenderer, 255, 255, 0, 255);
 SDL_RenderFillRect(pRenderer, &rect2);
 SDL_RenderPresent(pRenderer);
-text(pRenderer,"Indiquer la source",16,1052,125,0,0,0);
+text(pRenderer,(char *)"Indiquer la source",16,1052,125,0,0,0);
 
 rect2={1030,200,155,60};
 SDL_SetRenderDrawColor(pRenderer, 255, 255, 0, 255);
 SDL_RenderFillRect(pRenderer, &rect2);
 SDL_RenderPresent(pRenderer);
-text(pRenderer,"Indiquer la destination",16,1035,225,0,0,0);
+text(pRenderer,(char *)"Indiquer la destination",16,1035,225,0,0,0);
 
 rect2={1030,300,155,60};
 SDL_SetRenderDrawColor(pRenderer, 255, 255, 0, 255);
 SDL_RenderFillRect(pRenderer, &rect2);
 SDL_RenderPresent(pRenderer);
-text(pRenderer,"Le plus court chemin",16,1038,325,0,0,0);
+text(pRenderer,(char *)"Le plus court chemin",16,1038,325,0,0,0);
 
-bool courtChemin=false, source=false, destinatin=false;
+rect2={0,500,1200,6};
+SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 0);
+SDL_RenderFillRect(pRenderer, &rect2);
+SDL_RenderPresent(pRenderer);
+
+
+
+
+
+bool  source=false, destinatin=false;
 SDL_Point p1,p2;
 
     while (isOpen)
@@ -112,7 +119,7 @@ SDL_Point p1,p2;
                   {
                       if(events.motion.x>=1030 && events.motion.x <= 1185 &&  events.motion.y >=300 && events.motion.y<=360 ){
 
-                       Bellman(G,p1,p2);
+                       Bellman(G,p1,p2,pRenderer);
 
                       }else if( events.motion.x>=1030 && events.motion.x <= 1185 && events.motion.y >=100 && events.motion.y<=160 ){
                           source=true;
@@ -205,7 +212,7 @@ SDL_Point p1,p2;
 
                             }
                     }else {
-                        if(mouse.x<1000){
+                        if(mouse.x<1000 && mouse.y < 500){
 
                             rect1.x=mouse.x;
                             rect1.y=mouse.y;
@@ -339,7 +346,7 @@ void text(SDL_Renderer* pRenderer, char *txt,int fontSize, int x, int y, int R,i
      }
     TTF_Font *police = NULL;
     police = TTF_OpenFont("arial.ttf", fontSize);
-    SDL_Surface* text = TTF_RenderText_Blended(police,txt , SDL_Color{ R, G, B, 255 });
+    SDL_Surface* text = TTF_RenderText_Blended(police,txt , SDL_Color{ (Uint8)R, (Uint8)G, (Uint8)B, 255 });
     SDL_Texture* texture = SDL_CreateTextureFromSurface(pRenderer, text);
     SDL_Rect position;
     SDL_QueryTexture(texture, nullptr, nullptr, &position.w, &position.h);
@@ -372,3 +379,38 @@ if(events.key.keysym.sym == SDLK_0 ||
 }
 
 
+void afficherPlusCourtChemin(SDL_Renderer* pRenderer, BellmanTable chemin[],int nb){
+     SDL_Rect rect={200,570,50,50};
+     SDL_Point departLine={},arriveLine;
+     char coordonnes[20]="";
+     char buffer[20];
+  for(int i=0;i<nb;i++){
+        printf("\n (%d,%d):%d      ",chemin[i].x,chemin[i].y,chemin[i].valeur);
+
+        SDL_SetRenderDrawColor(pRenderer, 0, 255, 255, 255);
+        SDL_RenderFillRect(pRenderer, &rect);
+        SDL_RenderPresent(pRenderer);
+        itoa(chemin[nb-i-1].x,buffer,10);
+        strcat(coordonnes,buffer);
+        strcat(coordonnes," , ");
+        itoa(chemin[nb-i-1].y,buffer,10);
+        strcat(coordonnes,buffer);
+        text(pRenderer,coordonnes,17,rect.x+12,rect.y+21,0,0,102);
+        strcpy(coordonnes,"");
+
+        if(i!=nb-1){
+            SDL_SetRenderDrawColor(pRenderer, 255, 0, 127, 255);
+            departLine.x=rect.x+50;departLine.y=rect.y+25;
+            arriveLine.x=departLine.x+100;arriveLine.y=departLine.y;
+            SDL_RenderDrawLine(pRenderer, departLine.x, departLine.y, arriveLine.x, arriveLine.y);
+        }
+
+        rect.x=rect.x+150;
+
+    }
+    strcpy(coordonnes,"Le cout est : ");
+     itoa(chemin[0].valeur,buffer,10);
+    strcat(coordonnes,buffer);
+  text(pRenderer,coordonnes,18,10,590,255,255,0);
+
+}

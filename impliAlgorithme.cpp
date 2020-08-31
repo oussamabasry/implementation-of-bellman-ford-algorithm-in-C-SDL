@@ -2,7 +2,7 @@
 #define INFINI 900
 
 
-int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint){
+int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint, SDL_Renderer* pRenderer){
 
     BellmanTable bellmanTable[G->numberNode][G->numberNode];
 
@@ -94,8 +94,11 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint){
     NodeSearch.x=finalPoint.x;
     NodeSearch.y=finalPoint.y;
     chemin[nb].x= NodeSearch.x;
-     chemin[nb].y=NodeSearch.y;
+    chemin[nb].y=NodeSearch.y;
+    index=searchTab(G,NodeSearch.x,NodeSearch.y)->data->index;
+    chemin[nb].valeur=bellmanTable[G->numberNode-1][index].valeur;
      nb++;
+
 
 
     for(int i=G->numberNode-1;i>0;i--){
@@ -103,7 +106,7 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint){
          index=searchTab(G,NodeSearch.x,NodeSearch.y)->data->index;
          chemin[nb].x=bellmanTable[i][index].x;
          chemin[nb].y=bellmanTable[i][index].y;
-        // chemin[nb].valeur=bellmanTable[i][index].valeur;
+         chemin[nb].valeur=bellmanTable[i][index].valeur;
          NodeSearch.x= chemin[nb].x;
          NodeSearch.y=chemin[nb].y;
          nb++;
@@ -116,10 +119,8 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint){
 
             }
 
+ afficherPlusCourtChemin(pRenderer,chemin,nb);
 
-    for(int i=0;i<nb;i++){
-        printf("\n (%d,%d):%d      ",chemin[i].x,chemin[i].y,chemin[i].valeur);
-    }
 
 
 return 1;
