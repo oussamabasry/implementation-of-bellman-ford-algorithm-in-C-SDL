@@ -50,17 +50,7 @@ int vue(Graph *G)
     int i=5;
 
     Element *searchElem,*searchElem1;
-   /* TTF_Font *police = NULL;
-    police = TTF_OpenFont("arial.Qttf", 20);
-    SDL_Surface* text = TTF_RenderText_Blended(police, "Algorithme de bellman ford", SDL_Color{ 0, 255, 0, 255 });
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(pRenderer, text);
-    SDL_Rect position;
-    SDL_QueryTexture(texture, nullptr, nullptr, &position.w, &position.h);
-    position.x = 830;
-    position.y = 40;
-    SDL_FreeSurface(text);
-    TTF_CloseFont(police);
-*/
+
 
 if (Mix_OpenAudio(96000, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) < 0)
     {
@@ -78,6 +68,7 @@ if (music == nullptr)
     return -1;
 }
 
+// les buttons
 
 SDL_Rect rect2={1000,0,7,700};
 SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 0);
@@ -102,7 +93,8 @@ SDL_RenderFillRect(pRenderer, &rect2);
 SDL_RenderPresent(pRenderer);
 text(pRenderer,"Le plus court chemin",16,1038,325,0,0,0);
 
-
+bool courtChemin=false, source=false, destinatin=false;
+SDL_Point p1,p2;
 
     while (isOpen)
     {
@@ -118,6 +110,38 @@ text(pRenderer,"Le plus court chemin",16,1038,325,0,0,0);
 
                 case SDL_MOUSEBUTTONDOWN:
                   {
+                      if(events.motion.x>=1030 && events.motion.x <= 1185 &&  events.motion.y >=300 && events.motion.y<=360 ){
+
+                       Bellman(G,p1,p2);
+
+                      }else if( events.motion.x>=1030 && events.motion.x <= 1185 && events.motion.y >=100 && events.motion.y<=160 ){
+                          source=true;
+
+                      }else if( events.motion.x>=1030 && events.motion.x <= 1185 && events.motion.y >=200 && events.motion.y<=260 ){
+                          destinatin=true;
+
+                      }else if(source==true){
+                         p1.x=(events.motion.x-(events.motion.x%100))/100;
+                         p1.y=(events.motion.y-(events.motion.y%100))/100;
+                          /*  rect2={10,10,50,50};
+                            rect2.x=p1.x;
+                            rect2.y=p1.y;
+                            SDL_SetRenderDrawColor(pRenderer, 255, 204, 255, 255);
+                            SDL_RenderFillRect(pRenderer, &rect2);
+                            SDL_RenderPresent(pRenderer);*/
+                         source=false;
+                      }else if(destinatin==true){
+                         p2.x=(events.motion.x-(events.motion.x%100))/100;
+                         p2.y=(events.motion.y-(events.motion.y%100))/100;
+                        /* rect2={10,10,50,50};
+                            rect2.x=p2.x;
+                            rect2.y=p2.y;
+                            SDL_SetRenderDrawColor(pRenderer, 255, 204, 255, 255);
+                            SDL_RenderFillRect(pRenderer, &rect2);
+                            SDL_RenderPresent(pRenderer);*/
+                         destinatin=false;
+                      }else{
+
                     strcpy(coutArret,"");
                     mouse.x=events.motion.x-(events.motion.x%100);
                     mouse.y=events.motion.y-(events.motion.y%100);
@@ -206,6 +230,7 @@ text(pRenderer,"Le plus court chemin",16,1038,325,0,0,0);
                         }
 
                     }
+                    }
                   }
 
             case SDL_KEYDOWN:
@@ -244,18 +269,7 @@ text(pRenderer,"Le plus court chemin",16,1038,325,0,0,0);
                            displayList(G->tab[i]);
                             printf("\n");
                        }*/
-                       SDL_Point p1,p2;
-                       printf("x1:  ");
-                       scanf("%d",&p1.x);
-                       printf("y1:  ");
-                       scanf("%d", &p1.y);
 
-                        printf("x2:  ");
-                       scanf("%d",&p2.x);
-                       printf("y2:  ");
-                       scanf("%d", &p2.y);
-
-                       Bellman(G,p1,p2);
                   }
                 }
 
@@ -358,26 +372,3 @@ if(events.key.keysym.sym == SDLK_0 ||
 }
 
 
-
-
-
-/*
-else if(events.key.keysym.sym == SDLK_d && events.type==SDL_KEYDOWN)
-            {
-                   SDL_Point pointA;
-                   SDL_Point pointB;
-                   printf("\ndebut");
-                   SDL_Event ev;
-                   SDL_WaitEvent(&ev);
-                   pointA.x=events.motion.x-(events.motion.x%100);
-                   pointA.y=events.motion.y-(events.motion.y%100);
-                   printf("\nmilieu");
-                   SDL_WaitEvent(&ev);
-                   pointB.x=events.motion.x-(events.motion.x%100);
-                   pointB.y=events.motion.y-(events.motion.y%100);
-                    printf("\nfin");
-
-                  SDL_SetRenderDrawColor(pRenderer, 0, 255, 0, 255);
-                  SDL_RenderDrawLine(pRenderer, pointA.x, pointA.y, pointB.x, pointB.y);
-                  SDL_RenderPresent(pRenderer);
-*/
