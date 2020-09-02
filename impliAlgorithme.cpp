@@ -37,13 +37,13 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint, SDL_Renderer* p
              BellmanTable arrive = bellmanTable[i-1][balayage->data->index];
              int val = balayage->data->valuation;
 
-            if( arrive.valeur > depart.valeur + val && depart.valeur + val < bellmanTable[i][balayage->data->index].valeur ){
+            if( arrive.valeur>depart.valeur + val && depart.valeur + val < bellmanTable[i][balayage->data->index].valeur ){
 
               bellmanTable[i][balayage->data->index].valeur = depart.valeur + val;
               bellmanTable[i][balayage->data->index].x = G->tab[j]->data->x;
               bellmanTable[i][balayage->data->index].y = G->tab[j]->data->y;
 
-            }else if(arrive.valeur <= depart.valeur + val && depart.valeur + val < bellmanTable[i][balayage->data->index].valeur){
+            }else if(arrive.valeur<=depart.valeur + val && depart.valeur + val<bellmanTable[i][balayage->data->index].valeur){
 
               bellmanTable[i][balayage->data->index].valeur = arrive.valeur;
               bellmanTable[i][balayage->data->index].x = arrive.x;
@@ -56,16 +56,9 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint, SDL_Renderer* p
         }
     }
     }
-/*
-          if(bellmanTable[i-1][G->tab[j]->data->index].valeur>bellmanTable[i-1][balayage->data->index].valeur+ balayage->valuation ){
-              bellmanTable[i][G->tab[j]->data->index].valeur=bellmanTable[i-1][balayage->data->index].valeur+ balayage->valuation;
-              bellmanTable[i][G->tab[j]->data->index].x=balayage->data->x;
-              bellmanTable[i][G->tab[j]->data->index].y=balayage->data->y;
-            }else{
-              bellmanTable[i][G->tab[j]->data->index].valeur=bellmanTable[i-1][G->tab[j]->data->index].valeur;
-              bellmanTable[i][G->tab[j]->data->index].x=bellmanTable[i-1][G->tab[j]->data->index].x;
-              bellmanTable[i][G->tab[j]->data->index].y=bellmanTable[i-1][G->tab[j]->data->index].y;
-            }*/
+
+
+
 
 
 
