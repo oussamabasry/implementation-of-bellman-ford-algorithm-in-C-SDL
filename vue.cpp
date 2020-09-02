@@ -263,7 +263,6 @@ int vue(Graph *G)
                     if (searchElem1 != NULL && searchElem != NULL)
                     {
                         addElementList(&searchElem, searchElem1, atoi(coutArret));
-                        addElementList(&searchElem1, searchElem, atoi(coutArret));
                         text(pRenderer, coutArret, 15, mileu.x, mileu.y, 255, 255, 0);
                     }
                 }
