@@ -16,14 +16,14 @@ typedef struct
     int index;
 } Data;
 
-// structure element c'est liste simplement chainee
+// structure element c'est liste simplement chainèe
 typedef struct Elem
 {
     Data *data;
     struct Elem *next;
 } Element;
 
-// structure graphe c'est un tableau d'adresse des elements
+// structure graphe c'est un tableau d'adresse des élements
 typedef struct
 {
     int numberNode;
@@ -52,5 +52,7 @@ bool conditionNumber(SDL_Event event);
 void audioAlert();
 int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint, SDL_Renderer *pRenderer);
 void afficherPlusCourtChemin(SDL_Renderer *pRenderer, BellmanTable chemin[], int nb);
+void Draw_rect(SDL_Renderer *renderer, int x, int y, int width, int height, int red, int green, int blue);
+void Draw_arc(SDL_Renderer *renderer, SDL_Point pointA, SDL_Point pointB, SDL_Point *departLine, SDL_Point *arriveLine);
 
 #endif // HEADERS_H_INCLUDED

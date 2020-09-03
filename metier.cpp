@@ -1,7 +1,6 @@
 #include "headers.h"
 
-
-// Permet de creer un element  Data c'est les donnees d'un nœud
+// Permet de creer un element  Data c'est les donnees d'un nÅ“ud
 Data *createData(int x, int y, int index)
 {
     Data *data;
@@ -12,7 +11,7 @@ Data *createData(int x, int y, int index)
     return data;
 }
 
-// Permet de creer un nœud
+// Permet de creer un nÅ“ud
 Element *createElement(int x, int y, int valuation, int index)
 {
     Element *elem;
@@ -23,7 +22,7 @@ Element *createElement(int x, int y, int valuation, int index)
     return elem;
 }
 
-// Permet d'ajouter un seccesseur à un nœud
+// Permet d'ajouter un seccesseur Ã  un nÅ“ud
 void addElementList(Element **L, Element *suiv, int valuation)
 {
     Element *elem;
@@ -44,7 +43,7 @@ void addElementList(Element **L, Element *suiv, int valuation)
     p->next = elem;
 }
 
-// Permet d'ajouter un nœud à notre tableau
+// Permet d'ajouter un nÅ“ud Ã  notre tableau
 void addElementNode(Graph *G, int x, int y, int valuation)
 {
     Element *elem;
@@ -55,7 +54,7 @@ void addElementNode(Graph *G, int x, int y, int valuation)
     G->numberNode++;
 }
 
-// Permet d'afficher les successeurs d'un nœud
+// Permet d'afficher les successeurs d'un nÅ“ud
 void displayList(Element *L)
 {
     while (L != NULL)
@@ -64,7 +63,6 @@ void displayList(Element *L)
         L = L->next;
     }
 }
-
 
 // Cette fonction permet de creer et initialiser un graphe
 Graph *createGraph()
@@ -77,7 +75,7 @@ Graph *createGraph()
     return gr;
 }
 
-// Permet de chercher un nœud de notre graphe
+// Permet de chercher un nÅ“ud de notre graphe
 // et qui retourne son adresse
 Element *searchTab(Graph *G, int x, int y)
 {

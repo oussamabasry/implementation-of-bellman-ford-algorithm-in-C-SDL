@@ -1,7 +1,6 @@
 #include "headers.h"
 #define INFINI 9000
 
-
 int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint, SDL_Renderer *pRenderer)
 {
     // Declaration de la table de calcul
@@ -18,51 +17,51 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint, SDL_Renderer *p
         }
     }
 
-    // chercher l'adresse du n�ud source
+    // chercher l'adresse du nœud source
     Element *searchPoint = searchTab(G, initPoint.x, initPoint.y);
     if (searchPoint == NULL)
     {
         return 0;
     }
 
-    // Initialiser la valeur du n�ud source avec la valeur 0 � la premiere iteration
+    // Initialiser la valeur du nœud source avec la valeur 0 à la premiere iteration
     bellmanTable[0][searchPoint->data->index].valeur = 0;
 
     Element *balayage;
 
     for (int i = 1; i < G->numberNode; i++)
     {
-        // Initialiser la valeur du n�ud source avec la valeur 0 � chaque it�ration
+        // Initialiser la valeur du nœud source avec la valeur 0 à chaque itération
         bellmanTable[i][searchPoint->data->index].valeur = 0;
-        // Pour chaque n�ud du tableau
+        // Pour chaque nœud du tableau
         for (int j = 0; j < G->numberNode; j++)
         {
-            // Visiter tous les seccesseurs de cet n�ud
+            // Visiter tous les seccesseurs de cet nœud
             balayage = G->tab[j]->next;
             while (balayage != NULL)
             {
 
-                    // des affectation juste pour simplifier les expressions
-                    BellmanTable depart = bellmanTable[i - 1][G->tab[j]->data->index];
-                    BellmanTable arrive = bellmanTable[i - 1][balayage->data->index];
-                    int val = balayage->data->valuation;
+                // des affectation juste pour simplifier les expressions
+                BellmanTable depart = bellmanTable[i - 1][G->tab[j]->data->index];
+                BellmanTable arrive = bellmanTable[i - 1][balayage->data->index];
+                int val = balayage->data->valuation;
 
-                    if (arrive.valeur > depart.valeur + val &&
-                        depart.valeur + val < bellmanTable[i][balayage->data->index].valeur)
-                    {
+                if (arrive.valeur > depart.valeur + val &&
+                    depart.valeur + val < bellmanTable[i][balayage->data->index].valeur)
+                {
 
-                        bellmanTable[i][balayage->data->index].valeur = depart.valeur + val;
-                        bellmanTable[i][balayage->data->index].x = G->tab[j]->data->x;
-                        bellmanTable[i][balayage->data->index].y = G->tab[j]->data->y;
-                    }
-                    else if (arrive.valeur <= depart.valeur + val &&
-                             depart.valeur + val < bellmanTable[i][balayage->data->index].valeur)
-                    {
+                    bellmanTable[i][balayage->data->index].valeur = depart.valeur + val;
+                    bellmanTable[i][balayage->data->index].x = G->tab[j]->data->x;
+                    bellmanTable[i][balayage->data->index].y = G->tab[j]->data->y;
+                }
+                else if (arrive.valeur <= depart.valeur + val &&
+                         depart.valeur + val < bellmanTable[i][balayage->data->index].valeur)
+                {
 
-                        bellmanTable[i][balayage->data->index].valeur = arrive.valeur;
-                        bellmanTable[i][balayage->data->index].x = arrive.x;
-                        bellmanTable[i][balayage->data->index].y = arrive.y;
-                    }
+                    bellmanTable[i][balayage->data->index].valeur = arrive.valeur;
+                    bellmanTable[i][balayage->data->index].x = arrive.x;
+                    bellmanTable[i][balayage->data->index].y = arrive.y;
+                }
 
                 // Passage au seccesseur suivant
                 balayage = balayage->next;
@@ -70,7 +69,7 @@ int Bellman(Graph *G, SDL_Point initPoint, SDL_Point finalPoint, SDL_Renderer *p
         }
     }
 
-    // Imprimer les valeurs � la console juste pour v�rifer les traitemets
+    // Imprimer les valeurs à la console juste pour vérifer le résultat
     for (int i = 0; i < G->numberNode; i++)
     {
         for (int j = 0; j < G->numberNode; j++)
